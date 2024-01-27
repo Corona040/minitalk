@@ -6,7 +6,7 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:59:25 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/27 22:36:28 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:48:54 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_server_status
 	int		msg_status;
 	char	*msg;
 	char	*ack_msg;
-	float	load;
 }	t_server_status;
 
 #endif
