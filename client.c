@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:06:05 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/27 22:51:40 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/27 23:01:40 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	sigchar(pid_t pid, char c);
 void	sigstr(pid_t pid, char *str);
-void	append(char c);
 void	charhandler(char *c, int *i);
 void	sighandler(int sig);
 
@@ -41,35 +40,38 @@ int	main(int argc, char **argv)
 	}
 }
 
-void	sigstr(pid_t pid, char *str)
+void	sigchar(pid_t pid, char c)
 {
 	int	i;
 
+	i = 0;
+	while ((unsigned int) i < sizeof(c) * 8)
+	{
+		if (c & (1 << i))
+		{
+			kill(pid, SIGUSR1);
+			pause();
+		}
+		else
+		{
+			kill(pid, SIGUSR2);
+			pause();
+		}
+		i++;
+	}
+}
+
+void	sigstr(pid_t pid, char *str)
+{
 	ft_printf("CONNECT REQUEST: ");
 	kill(pid, SIGUSR1);
 	pause();
 	while (*str)
-	{
-		i = 0;
-		while ((unsigned int) i < sizeof(*str) * 8)
-		{
-			if (*str & (1 << i))
-			{
-				kill(pid, SIGUSR1);
-				pause();
-			}
-			else
-			{
-				kill(pid, SIGUSR2);
-				pause();
-			}
-			i++;
-		}
-	}
+		sigchar(pid, *str++);
 	sigchar(pid, *str);
 }
 
-void	append(char c)
+void	charhandler(char *c, int *i)
 {
 	char	*temp;
 
@@ -85,12 +87,7 @@ void	append(char c)
 		ft_memcpy(g_server.ack_msg, temp, g_server.idx + 1);
 		free(temp);
 	}
-	g_server.ack_msg[g_server.idx] = c;
-}
-
-void	charhandler(char *c, int *i)
-{
-	append(*c);
+	g_server.ack_msg[g_server.idx] = *c;
 	if (!*c && g_server.msg_status)
 		ft_printf("OK!\n");
 	if (g_server.msg[g_server.idx] != g_server.ack_msg[g_server.idx])
