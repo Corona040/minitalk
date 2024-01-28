@@ -1,7 +1,7 @@
-NAME = client server
+NAME = minitalk
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c
+client_SRC = client.c
+server_SRC = server.c
 
 CC = cc
 
@@ -11,9 +11,12 @@ LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)
-	cc $(CFLAGS) $(SRC_CLIENT) $< -o client
-	cc $(CFLAGS) $(SRC_SERVER) $< -o server
+$(NAME): client server
+
+client: $(client_SRC) $(LIBFT)
+	$(CC) $(CFLAGS) $^ -o $@
+server: $(server_SRC) $(LIBFT)
+	$(CC) $(CFLAGS) $^ -o $@
 
 $(LIBFT):
 	@make -C libft printf
@@ -22,8 +25,8 @@ clean:
 	@make -C libft clean
 
 fclean: clean
-	rm -f $(NAME) libft/libft.a
+	rm -f client server libft/libft.a
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re minitalk

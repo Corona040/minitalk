@@ -6,17 +6,18 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 19:30:25 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/27 21:52:32 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/28 21:38:32 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include <stdlib.h>
 
 void	append(char c);
 void	charhandler(char *c, int *i);
 void	sighandler(int sig, siginfo_t *info, void *context);
 
-static volatile t_dynamic_array	g_client = {.pid = 0, .msg = NULL, .idx = 0};
+static volatile t_client	g_client = {.msg_status = 1};
 
 int	main(void)
 {
@@ -24,14 +25,20 @@ int	main(void)
 	sigset_t			sa_mask;
 	struct sigaction	sa;
 
-	sigemptyset(&sa_mask);
-	sigaddset(&sa_mask, SIGUSR1);
-	sigaddset(&sa_mask, SIGUSR2);
+	if (sigemptyset(&sa_mask) < 0 || sigaddset(&sa_mask, SIGUSR1) < 0 \
+		|| sigaddset(&sa_mask, SIGUSR2) < 0)
+	{
+		ft_printf("SIGSET INIT FAILED!\n");
+		return (0);
+	}
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_mask = sa_mask;
 	sa.sa_sigaction = sighandler;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	if (sigaction(SIGUSR1, &sa, NULL) < 0 || sigaction(SIGUSR2, &sa, NULL) < 0)
+	{
+		ft_printf("SIGACTION FAILED!\n");
+		return (0);
+	}
 	pid = getpid();
 	ft_printf("%u\n", (unsigned int) pid);
 	while (1)
@@ -46,26 +53,60 @@ void	append(char c)
 	g_client.msg = ft_calloc(g_client.idx + 2, sizeof(char));
 	if (!g_client.msg)
 	{
+		g_client.msg_status = 0;
 		free(temp);
-		exit(EXIT_FAILURE);
+		temp = 0;
 	}
-	if (temp)
+	else
 	{
-		ft_memcpy(g_client.msg, temp, g_client.idx + 1);
-		free(temp);
+		if (temp)
+		{
+			ft_memcpy(g_client.msg, temp, g_client.idx + 1);
+			free(temp);
+		}
+		g_client.msg[g_client.idx] = c;
 	}
-	g_client.msg[g_client.idx] = c;
+}
+
+void	sigprocess(int sig, siginfo_t *info, char *c, int *i)
+{
+	if (sig == SIGUSR1)
+		*c |= (1 << *i);
+	if (sig == SIGUSR1 && g_client.msg_status)
+		kill(info->si_pid, SIGUSR1);
+	if (sig == SIGUSR2 || !g_client.msg_status)
+		kill(info->si_pid, SIGUSR2);
+	(*i)++;
+	if (*i % 8 == 0)
+	{
+		if (g_client.msg_status)
+			charhandler(c, i);
+		else
+		{
+			g_client.pid = 0;
+			if (g_client.msg)
+				free(g_client.msg);
+			g_client.msg = NULL;
+			g_client.idx = 0;
+			g_client.msg_status = 1;
+			*c = 0;
+			charhandler(c, i);
+		}
+	}
 }
 
 void	charhandler(char *c, int *i)
 {
-	append(*c);
+	if (g_client.msg_status)
+		append(*c);
 	g_client.idx++;
 	if (!*c)
 	{
-		ft_printf("%s\n", g_client.msg);
+		if (g_client.msg_status)
+			ft_printf("%s\n", g_client.msg);
 		g_client.pid = 0;
-		free(g_client.msg);
+		if (g_client.msg)
+			free(g_client.msg);
 		g_client.msg = NULL;
 		g_client.idx = 0;
 	}
@@ -85,19 +126,9 @@ void	sighandler(int sig, siginfo_t *info, void *context)
 	else if (!g_client.pid)
 	{
 		kill(info->si_pid, SIGUSR1);
-		g_client.pid = info->si_pid;
+		if (g_client.msg_status)
+			g_client.pid = info->si_pid;
 	}
 	else
-	{
-		if (sig == SIGUSR1)
-		{
-			c |= (1 << i);
-			kill(info->si_pid, SIGUSR1);
-		}
-		else
-			kill(info->si_pid, SIGUSR2);
-		i++;
-		if (i % 8 == 0)
-			charhandler(&c, &i);
-	}
+		sigprocess(sig, info, &c, &i);
 }
