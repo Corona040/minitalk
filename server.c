@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 19:30:25 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/28 21:38:32 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:36:32 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 
 void	append(char c);
+void	sigprocess(int sig, siginfo_t *info, char *c, int *i);
 void	charhandler(char *c, int *i);
 void	sighandler(int sig, siginfo_t *info, void *context);
 
