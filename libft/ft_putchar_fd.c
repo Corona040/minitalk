@@ -6,26 +6,22 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:16:18 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/14 08:27:07 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:52:50 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ARGS:
+	c: The character to output.
+	fd:	The file descriptor on which to write.
+RETURN VALUE:
+	None.
+DESC:
+	Outputs the character 'c' to the given file descriptor.
+*/
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
-
-/*
-#include <unistd.h>
-
-int	main(void)
-{
-	for (int i = 0; i < 0xFF; i++)
-	{
-		ft_putchar_fd(i, 2);
-		//printf("\t%c\t%i\n", i, i);
-	}
-}
-*/

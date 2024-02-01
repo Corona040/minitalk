@@ -6,12 +6,23 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 09:08:13 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/04 16:21:48 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:10:04 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ARGS:
+	s1: The string to be trimmed.
+	set: The reference set of characters to trim.
+RETURN VALUE:
+	The trimmed string.
+	NULL if the allocation fails.
+DESC:
+	Allocates (with malloc(3)) and returns a copy of 's1' with the characters \
+	specified in 'set' removed from the beginning and the end of the string.
+*/
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*trim;
@@ -29,15 +40,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (0);
 	return (trim);
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*s1 = "aaaaa";
-	char	*set = "a";
-
-	printf(".%s.\n", ft_strtrim(s1, set));
-}
-*/

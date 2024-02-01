@@ -6,23 +6,36 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:39:36 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/11 11:24:55 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:00:10 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count_digits(int n)
-{
-	size_t	count;
+static int		add_digits(char *str, int n);
+static size_t	count_digits(int n);
 
-	count = 1;
-	while (n / 10 != 0)
-	{
-		n /= 10;
-		count++;
-	}
-	return (count);
+/*
+ARGS:
+	n: the integer to convert.
+RETURN VALUE:
+	The string representing the integer; NULL if allocation fails.
+DESC:
+	Allocates (with malloc(3)) and returns a string representing the integer \
+	received as an argument. Negative numbers are handled.
+*/
+char	*ft_itoa(int n)
+{
+	char	*nmb;
+
+	if (n < 0)
+		nmb = ft_calloc(count_digits(n) + 2, sizeof(char));
+	else
+		nmb = ft_calloc(count_digits(n) + 1, sizeof(char));
+	if (!nmb)
+		return (0);
+	add_digits(nmb, n);
+	return (nmb);
 }
 
 static int	add_digits(char *str, int n)
@@ -44,27 +57,15 @@ static int	add_digits(char *str, int n)
 	return (i + 1);
 }
 
-char	*ft_itoa(int n)
+static size_t	count_digits(int n)
 {
-	char	*nmb;
+	size_t	count;
 
-	if (n < 0)
-		nmb = ft_calloc(count_digits(n) + 2, sizeof(char));
-	else
-		nmb = ft_calloc(count_digits(n) + 1, sizeof(char));
-	if (!nmb)
-		return (0);
-	add_digits(nmb, n);
-	return (nmb);
+	count = 1;
+	while (n / 10 != 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	int	n = -102;
-
-	printf("%s\n", ft_itoa(n));
-}
-*/

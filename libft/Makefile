@@ -83,10 +83,10 @@ complete: $(OBJS_COMP)
 	@make OBJS="$(OBJS_COMP)" all
 
 $(NAME): $(OBJS)
-	@ar rcs $@ $^
+	ar rcs $@ $^
 
 %.o: %.c
-	@$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
 	rm -f $(OBJS_COMP)

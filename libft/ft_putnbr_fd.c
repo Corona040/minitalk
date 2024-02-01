@@ -6,12 +6,21 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:22:54 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/13 10:11:30 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:55:14 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ARGS:
+	n: The integer to output.
+	fd: The file descriptor on which to write.
+RETURN VALUE:
+	None.
+DESC:
+	Outputs the integer 'n' to the given file descriptor.
+*/
 void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
@@ -29,16 +38,3 @@ void	ft_putnbr_fd(int n, int fd)
 	else
 		ft_putchar_fd(n + '0', fd);
 }
-
-/*
-int	main(void)
-{
-	ft_putnbr_fd(2147483647, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putnbr_fd(-2147483648, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putnbr_fd(0, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putnbr_fd(120, 1);
-}
-*/

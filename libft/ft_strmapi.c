@@ -6,12 +6,24 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:32:26 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/13 09:43:18 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:07:33 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ARGS:
+	s: The string on which to iterate.
+	f: The function to apply to each character.
+RETURN VALUE:
+	The string created from the successive applications of 'f'.
+	NULL if the allocation fails.
+DESC:
+	Applies the function 'f' to each character of the string 's', and passing \
+	its index as first argument to create a new string (with malloc(3)) \
+	resulting from successive applications of 'f'.
+*/
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char	*mapi;
@@ -28,20 +40,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	}
 	return (mapi);
 }
-
-/*
-#include <stdio.h>
-
-char	itolower(unsigned int i, char c)
-{
-	(void) i;
-	return (ft_tolower(c));
-}
-
-int	main(void)
-{
-	char *str = "BANANAS";
-
-	printf("%s\n", ft_strmapi(str, &itolower));
-}
-*/

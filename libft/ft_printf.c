@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:02:24 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/17 18:04:43 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:54:51 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_printf_fd(const char *format, va_list argp, int fd)
 		}
 		else
 		{
-			ft_putchar_fd(*format, fd);
+			ft_putchar_fd(*format, 1);
 			result += 1;
 		}
 		format++;
@@ -63,7 +63,7 @@ int	ft_call_print(const char **format, va_list argp, int fd)
 		return (ft_printbigx_fd(argp, fd));
 	else if (**format == '%')
 	{
-		ft_putchar_fd(**format, fd);
+		ft_putchar_fd(**format, 1);
 		return (1);
 	}
 	else

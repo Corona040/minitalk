@@ -6,19 +6,27 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:28:31 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/01/26 12:42:12 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:47:00 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
+ARGS:
+	fd: The file descriptor to be read.
+RETURN VALUE:
+	The first line of the file as a string.
+DESC:
+	Reads a file and returns its first line.
+*/
 char	*get_next_line(int fd)
 {
 	static char	buf[1024][BUFFER_SIZE];
 	char		*line;
 	int			loop;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (fd < 0)
 		return (NULL);
 	line = NULL;
 	loop = 1;
@@ -111,31 +119,3 @@ int	end_of_file(int read_size, int *loop, char *line)
 	}
 	return (0);
 }
-
-/*
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-
-	fd = open("test.txt",O_RDONLY);
-	i = 1;
-	line = (void *)1;
-	while (line)
-	{
-		line =  get_next_line(fd);
-		printf("call %i:\n%s\n",i++,line);
-		if (line)
-		{
-			free(line);
-			line = (void *)1;
-		}
-	}
-	close(fd);
-}
-*/

@@ -6,12 +6,20 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:33:42 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/12 12:25:00 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:44:23 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ARGS:
+	lst: The beginning of the list.
+RETURN VALUE:
+	Last node of the list.
+DESC:
+	Returns the last node of the list.
+*/
 t_list	*ft_lstlast(t_list *lst)
 {
 	if (lst == 0)
@@ -20,22 +28,3 @@ t_list	*ft_lstlast(t_list *lst)
 		lst = lst->next;
 	return (lst);
 }
-
-/*
-#include <stdio.h>
-
-int main(void)
-{
-    t_list  b;
-    t_list  c;
-    int     bv = 2;
-    int     cv = 3;
-
-    b.next = &c;
-    b.content = &bv;
-    c.next = 0;
-    c.content = &cv;
-
-    printf("%i\n", *((int *)(ft_lstlast(&b)->content)));
-}
-*/

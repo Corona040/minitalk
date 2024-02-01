@@ -6,12 +6,13 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:12:43 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/09 17:49:39 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:08:03 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// man strnstr
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
@@ -32,19 +33,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (0);
 }
-
-/*
-//cc -L/usr/lib/x86_64-linux-gnu -lbsd *.c
-#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*big = "";
-	char	*little = "";
-	size_t	n = 0;
-
-	printf("%s\n", strnstr(big, little, n));
-	printf("%s\n", ft_strnstr(big, little, n));
-}
-*/

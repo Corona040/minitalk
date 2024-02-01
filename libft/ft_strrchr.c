@@ -6,12 +6,13 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 11:49:26 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/13 11:05:36 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:08:24 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// man strrchr
 char	*ft_strrchr(const char *s, int c)
 {
 	char			*str;
@@ -28,17 +29,3 @@ char	*ft_strrchr(const char *s, int c)
 	else
 		return (0);
 }
-
-/*
-#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char	*str = "banana";
-	int		c = 'a';
-
-	printf("they: %p\n", strrchr(str, c));
-	printf("mine: %p\n", ft_strrchr(str, c));
-}
-*/

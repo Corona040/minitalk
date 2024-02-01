@@ -6,12 +6,13 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:37:38 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/10/11 09:05:14 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:23:44 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// man calloc
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*array;
@@ -24,18 +25,3 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ft_bzero(array, nmemb * size);
 	return (array);
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	size_t nmemb = 1;
-	size_t size = max_size_t();
-
-	//printf("%lu\n", sizeof(size_t));
-	//printf("%zu\n", max_size_t());
-	printf("%p\n", calloc(nmemb, size));
-	printf("%p\n", ft_calloc(nmemb, size));
-}
-*/
